@@ -63,7 +63,6 @@ module.exports = {
       runtimeChunk: true,
     },
     devServer: {
-      disableHostCheck: true,
       compress: true,
       proxy: {
         "^/api/": {
@@ -74,15 +73,6 @@ module.exports = {
       },
       headers: {
         "cache-control": " no-cache,  max-age=1, must-revalidate",
-      },
-      setup: function (app, server)
-      {
-        app.use(function (req, res, next)
-        {
-          // just for debug use
-          // console.log(req.path);
-          next();
-        });
       },
     },
     devtool: "source-map",
