@@ -1,0 +1,33 @@
+<div class="to-do">
+    <div class="to-do-wrapper">
+        <Vuedraggable v-bind="dragOptions"
+                      :list="cardList"
+                      group="task"
+                      :move="handlerMove"
+                      @end="handlerEndDrag">
+            <transition-group class="card-drop-area">
+                <ToDoCardComponent v-for="(item, index) in cardList"
+                                   :key="item.name + index"
+                                   :title="item.name"
+                                   :task-list="item.task"
+                                   :card-index="index"
+                                   :work-index="workPosition"
+                                   :card-id="item.id"
+                                   @contextmenu.native="onContextmenu">
+                </ToDoCardComponent>
+            </transition-group>
+        </Vuedraggable>
+
+        <div class="pirate-do-card">
+            <div class="pirate-do-header" @click="createCard">
+                <span v-if="!isShowAddCardNameArea">新增卡片</span>
+                <input v-if="isShowAddCardNameArea"
+                       v-model="toDoCard.name"
+                       ref="card_name"
+                       @blur="addCardToVuex"
+                       v-on:keyup.enter="addCardToVuex"
+                       placeholder="請輸入卡片名稱"></input>
+            </div>
+        </div>
+    </div>
+</div>

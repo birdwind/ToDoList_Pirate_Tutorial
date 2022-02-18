@@ -1,0 +1,40 @@
+.to-do {
+  display: block;
+  width: 100%;
+  min-width: fit-content;
+
+  .to-do-wrapper {
+    padding: 12px;
+    display: flex;
+    width: fit-content;
+
+    .card-drop-area {
+      display: flex;
+      flex: 0 1 auto;
+    }
+
+    .pirate-do-card {
+      margin-left: 24px;
+
+      .pirate-do-header {
+        padding: 12px;
+        border-radius: 6px;
+
+        input{
+          width: 100%;
+          border: 1px solid #6d6d6d;
+          border-radius: 6px;
+          padding: 6px;
+
+          &:focus-visible{
+            outline: unset;
+          }
+        }
+      }
+
+      &:first-of-type {
+        margin-left: initial;
+      }
+    }
+  }
+}

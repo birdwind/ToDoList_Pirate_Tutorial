@@ -1,0 +1,46 @@
+<div class="pirate-do-card">
+    <div class="pirate-do-header"
+         @click="handlerFocusHeader">
+        <span v-if="!isShowCardEdit">{{ title }}</span>
+        <input v-else
+               v-model="titleEditInput"
+               ref="title_input"
+               @blur="updateTitleToVuex"
+               v-on:keyup.enter="updateTitleToVuex"
+               :placeholder="title"></input>
+    </div>
+    <div class="pirate-do-main">
+        <el-collapse v-model="activeNames"
+                     accordion>
+            <Vuedraggable :list="taskList"
+                          :data-index="cardIndex"
+                          v-bind="dragOptions"
+                          group="card"
+                          :move="handlerMove"
+                          @end="handlerEndDrag">
+                <transition-group class="task-drop-area">
+                    <ToDoTaskComponent v-for="item in taskList"
+                                       :key="item.id"
+                                       :work-index="workIndex"
+                                       :card-index="cardIndex"
+                                       :to-do-task="item"
+                                       :task-id="item.id"
+                                       @contextmenu.native.stop="onContextmenu">
+                    </ToDoTaskComponent>
+                </transition-group>
+            </Vuedraggable>
+
+            <ToDoTaskComponent v-if="isShowTaskEdit"
+                               :work-index="workIndex"
+                               :card-index="cardIndex"
+                               :isCreat="true"
+                               @handlerCardEdited="handlerCardEdited">
+            </ToDoTaskComponent>
+        </el-collapse>
+    </div>
+    <div class="pirate-do-footer">
+        <button class="pirate-button" @click="showNewTaskArea">
+            <span>新增任務</span>
+        </button>
+    </div>
+</div>
