@@ -17,7 +17,7 @@ const icon = nativeImage.createFromPath(iconPath);
 const isMac = process.platform === "darwin";
 
 let mainWindowId: any;
-let tray = null;
+// let tray = null;
 
 const width = 800;
 const height = 600;
@@ -79,7 +79,7 @@ async function createWindow() {
     minWidth: width,
     minHeight: height,
     icon: mainWindowIcon,
-    frame: false,
+    frame: true,
     show: true,
     webPreferences: {
       // devTools: false,
@@ -104,37 +104,6 @@ async function createWindow() {
 
   BrowserWindowMap.set(browserWindow.id, browserWindow);
   mainWindowId = browserWindow.id;
-}
-
-async function createChildWindow(
-    width: number,
-    height: number,
-    parentWindow: any = null,
-    url: string = BrowserWindowMap.get(mainWindowId).webContents.getURL()
-) {
-  //TODO: 建立子視窗
-  const child = new BrowserWindow({
-    parent: parentWindow,
-    width: width,
-    height: height,
-    frame: false,
-    titleBarOverlay: true,
-    webPreferences: {
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION as unknown as boolean,
-      contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
-      preload: path.join(__dirname, "preload.js"), // 指定preload.js脚本
-    },
-  });
-
-  await child.loadURL(url);
-
-  if (process.env.WEBPACK_DEV_SERVER_URL) {
-    if (!process.env.IS_TEST) {
-      child.webContents.openDevTools();
-    }
-  }
-
-  BrowserWindowMap.set(child.id, child);
 }
 
 async function createTray() {
